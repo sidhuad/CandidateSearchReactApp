@@ -24,11 +24,7 @@ a:hover {
 
 body {
   background: linear-gradient(
-    180deg,
-    rgb(32, 44, 136) 0%,
-    rgba(9, 9, 121, 1) 15%,
-    rgba(0, 2, 18, 1) 100%
-  );
+    0deg,#6290c8,#376996,#1f487e,#1d3461);
   background-size: cover;
   background-repeat: no-repeat no-repeat;
   background-position: center center;

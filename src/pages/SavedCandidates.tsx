@@ -32,6 +32,7 @@ const SavedCandidates = () => {
       <table className="table table-hover ">
         <thead>
           <tr>
+            <th></th>
             <th>Name</th>
             <th>Location</th>
             <th>E-mail</th>
@@ -43,6 +44,7 @@ const SavedCandidates = () => {
         <tbody>    
           {usersData.map((element) => (
             <tr key={element.id}>
+              <td><img src={element.avatar_url} alt="avatar" style={{height:"40px", width:"40px", borderRadius:"20px"}} /></td>
               <td>{element.login}</td>
               <td>{element.location}</td>
               <td>{element.email}</td>

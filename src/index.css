@@ -80,17 +80,17 @@ main {
   align-items: center;
 }
 
-tr {
+/* tr {
   border-radius: 10px;
   background-color: #000;
   color: white;
-}
+} */
 
-tbody tr:nth-child(odd) {
+/* tbody tr:nth-child(odd) {
   background-color: #333333;
-}
+} */
 
-.nav {
+/* .nav {
   display: flex;
   justify-content: flex-start;
   padding: 1em 2em;
@@ -108,9 +108,50 @@ tbody tr:nth-child(odd) {
 
 .active {
   font-weight: 700;
+} */
+.buttons
+{
+  width: 32rem;
+}
+.custBtn{
+  cursor:pointer;
+}
+.custBtn:hover{
+  background-color: rgba(182, 29, 29, 0.87);
+  color: white;
+}
+.table{
+  width: 80%;
+}
+.nodata{
+  text-align: center;
+  font-size: 3rem;
+}
+.nodata img{
+  border-radius: 10px;
 }
 
-.table {
-  width: 80vw;
-  table-layout: fixed;
+/** periods animation**/
+.dot1{
+  position: relative;
+  animation: jump 1s ease-in-out 1.2s infinite; 
+}
+.dot2{
+  position: relative;
+  animation: jump 1s ease-in-out 1.4s infinite; 
+
+}
+.dot3{
+  position: relative;
+  animation: jump 1s ease-in-out 1.6s infinite ; 
+
+}
+.dot4{
+  position: relative;
+  animation: jump 1s ease-in-out 1.8s infinite; 
+}
+@keyframes jump {
+  0%{bottom:0px}
+  50%{bottom:15px}
+  100%{bottom:0px}
 }

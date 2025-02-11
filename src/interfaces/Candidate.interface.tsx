@@ -4,7 +4,9 @@ export interface User {
 }
 
 export interface UserData{
-    avatar_url:string;
+    avatar_url?:string;
+    name:string;
+    id:number;
     login:string;
     location:string;
     email:string;

@@ -5,7 +5,7 @@ import { UserData } from "../interfaces/Candidate.interface";
 
 const CandidateSearch = () => {
   const [users, setUsers] = useState<string[]>([]);
-  const [userData, setUserData] = useState<UserData[]>([]);
+  const [userData, setUserData] = useState<UserData>({} as UserData);
   const [count, setCount] = useState<number>(0);
 
   useEffect(() => {
@@ -18,17 +18,34 @@ const CandidateSearch = () => {
   }, []);
 
 
+  // useEffect(() => {
+  //   if (users.length > 0) {
+  //     const UserInfo = async () => {
+  //       const info = await Promise.all(
+  //         users.map(async (element) => await searchGithubUser(element))
+  //       );
+  //       setUserData(info);
+  //     };
+  //     UserInfo();
+  //   }
+  // }, [users]);
+
+  
   useEffect(() => {
-    if (users.length > 0) {
+    if (users.length > 0 && count < 30) {
       const UserInfo = async () => {
-        const info = await Promise.all(
-          users.map(async (element) => await searchGithubUser(element))
-        );
-        setUserData(info);
+       const data = await searchGithubUser(users[count])
+       if (!data.login) {
+        console.log('skipping user',count);
+        setCount(count + 1);
+        return;
+       }
+       setUserData(data);
       };
       UserInfo();
     }
-  }, [users]);
+  }, [users,count]);
+
 
   
   useEffect(() => {
@@ -38,23 +55,23 @@ const CandidateSearch = () => {
 
 
   const nextCard = () => {
-    if (count < userData.length) {
+    if (count < users.length) {
       setCount(count + 1);
     }
   };
   
   const nextCardAndSave = () => {
-    if (count < userData.length) {
+    if (count < users.length) {
       const savedData = JSON.parse(localStorage.getItem("UserInfo") || "[]");
       const userObj = {
-        avatar_url: userData[count].avatar_url,
-        name:userData[count].name,
-        id:userData[count].id,
-        login: userData[count].login,
-        location: userData[count].location,
-        email: userData[count].email,
-        company: userData[count].company,
-        bio: userData[count].bio,
+        avatar_url: userData.avatar_url,
+        name:userData.name,
+        id:userData.id,
+        login: userData.login,
+        location: userData.location,
+        email: userData.email,
+        company: userData.company,
+        bio: userData.bio,
       };
 
       savedData.push(userObj);
@@ -63,22 +80,22 @@ const CandidateSearch = () => {
     }
   };
 
-  if (userData.length === 0) return <div>Loading data ....</div>;
-  if (count === userData.length) return <div>End Of List....</div>
+  if (users.length === 0) return <div>Loading data ....</div>;
+  if (count === users.length - 1) return <div>End Of List....</div>
 
 
   return (
     <>
       <h1>CandidateSearch</h1>
       <UserCard
-        avatar_url={userData[count].avatar_url}
-        login={userData[count].login}
-        name={userData[count].name}
-        id={userData[count].id}
-        location={userData[count].location}
-        email={userData[count].email}
-        company={userData[count].company}
-        bio={userData[count].bio}
+        avatar_url={userData.avatar_url}
+        login={userData.login}
+        name={userData.name}
+        id={userData.id}
+        location={userData.location || 'No Data Available'}
+        email={userData.email || 'No Data Available'}
+        company={userData.company || 'No Data Available'}
+        bio={userData.bio || 'No Data Available'}
       />
       <div className="d-flex flex-row justify-content-evenly buttons my-3">
         <button className="btn p-3 btn-danger btnReject" onClick={nextCard}>
@@ -87,7 +104,7 @@ const CandidateSearch = () => {
         <button
           className="btn p-3 btn-warning btnAdd "
           onClick={nextCardAndSave}
-          disabled={count === userData.length - 1}
+          disabled={count === users.length - 1}
         >
           Add
         </button>
